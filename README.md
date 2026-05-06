@@ -239,16 +239,16 @@ DELETE /api/products/<id>/
 ## 📁 Project Structure
 
 ```
-ecommerce_backend/
+ecommerce_backend_API/
 ├── manage.py
 ├── requirements.txt
 ├── .env                        (do not commit)
 ├── .gitignore
-├── ecommerce_backend/
+├── E_comm_system/
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
-└── products/
+└── store/
     ├── migrations/
     ├── models.py
     ├── serializers.py
