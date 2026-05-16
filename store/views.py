@@ -1,15 +1,18 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from users.permissions import IsAdminOrReadOnly
 from .models import Product
 from .serializers import ProductSerializer
 
 
 class ProductList(APIView):
     """
-    GET  /api/products/   → List all products
-    POST /api/products/   → Create a new product
+    GET  /api/products/   → List all products (authenticated user)
+    POST /api/products/   → Create a new product (admin only)
     """
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, request):
         products = Product.objects.all().order_by('-created_at')
@@ -26,10 +29,11 @@ class ProductList(APIView):
 
 class ProductDetail(APIView):
     """
-    GET    /api/products/<id>/  → Get a single product
-    PUT    /api/products/<id>/  → Update a product
-    DELETE /api/products/<id>/  → Delete a product
+    GET    /api/products/<id>/  → Get a single product (any authenticated user)
+    PUT    /api/products/<id>/  → Update a product (admin only)
+    DELETE /api/products/<id>/  → Delete a product (admin only)
     """
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_object(self, pk):
         """
