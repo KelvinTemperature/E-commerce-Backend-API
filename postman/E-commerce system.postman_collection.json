@@ -8,12 +8,41 @@
   "item": [
     {
       "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "\r",
+              "if (response.tokens) {\r",
+              "    pm.collectionVariables.set(\"accessToken\",  response.tokens.access);\r",
+              "    pm.collectionVariables.set(\"refreshToken\", response.tokens.refresh);\r",
+              "    console.log(\"Tokens saved successfully.\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "request": {
-        "method": "DELETE",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{accessToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"name\": \"Wireless Headphones Pro\",\r\n    \"price\": \"79.99\",\r\n    \"description\": \"Upgraded noise cancelling headphones\",\r\n    \"stock\": 50\r\n}",
+          "raw": "{\r\n    \"refresh\": \"{{refreshToken}}\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -21,14 +50,14 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/api/products/1/",
+          "raw": "{{baseUrl}}/api/auth/logout/",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "api",
-            "products",
-            "1",
+            "auth",
+            "logout",
             ""
           ]
         }
@@ -63,6 +92,14 @@
   "variable": [
     {
       "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
       "value": ""
     }
   ]
