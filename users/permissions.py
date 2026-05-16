@@ -11,8 +11,7 @@ class IsAdminUser(BasePermission):
         return (
             request.user and
             request.user.is_authenticated and
-            request.user.is_admin          # our @property from the User model
-        )
+            request.user.is_admin)        
 
 
 class IsRegularUser(BasePermission):
@@ -25,7 +24,7 @@ class IsRegularUser(BasePermission):
         return (
             request.user and
             request.user.is_authenticated and
-            request.user.is_regular_user   # our @property from the User model
+            request.user.is_regular_user   
         )
 
 
